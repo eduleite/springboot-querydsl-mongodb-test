@@ -28,8 +28,7 @@ public class Loader implements ApplicationRunner {
         usuarios.forEach(user -> user.setHashedPassword("nova senha"));
         userRepository.saveAll(usuarios);
 
-        Predicate predicate = user.email.eq("edu.leite@gmail.com");
-        Iterable<User> users =  userRepository.findAll(predicate, user.name.asc());
+        Iterable<User> users =  userRepository.findByEmail("edu.leite@gmail.com");
         users.forEach(user -> System.out.println(user.getId()));
 
     }
