@@ -1,6 +1,5 @@
 package br.com.eduardo.money;
 
-import br.com.eduardo.money.model.QUser;
 import br.com.eduardo.money.model.User;
 import br.com.eduardo.money.repositories.UserRepository;
 import com.querydsl.core.types.Predicate;
@@ -9,7 +8,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
+import static br.com.eduardo.money.model.QUser.user;
 
 @Component
 public class Loader implements ApplicationRunner {
@@ -29,8 +28,8 @@ public class Loader implements ApplicationRunner {
         usuarios.forEach(user -> user.setHashedPassword("nova senha"));
         userRepository.saveAll(usuarios);
 
-        Predicate predicate = QUser.user.email.eq("edu.leite@gmail.com");
-        Iterable<User> users =  userRepository.findAll(predicate);
+        Predicate predicate = user.email.eq("edu.leite@gmail.com");
+        Iterable<User> users =  userRepository.findAll(predicate, user.name.asc());
         users.forEach(user -> System.out.println(user.getId()));
 
     }
